@@ -1,0 +1,169 @@
+local args = {
+    [1] = "RolePlayBio",
+    [2] = "\240\159\135\175\240\159\135\181"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+
+wait(0.1)
+
+local args = {
+    [1] = "RolePlayName",
+    [2] = "\229\189\188 KAMIKAZE's \231\165\158"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+
+
+local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/SrDark222/KAMIKAZE-S/refs/heads/main/Redzhubui%20(3).txt"))()
+
+local Window = redzlib:MakeWindow({
+  Title = "KAMIKAZE Hub : BROOKHAVEN RP",
+  SubTitle = "By Menor DK",
+  SaveFolder = "kAMIKAZE | dkzin do tcc v5.lua"
+})
+
+Window:AddMinimizeButton({
+    Button = { Image = "rbxassetid://113172392472550", BackgroundTransparency = 0 },
+    Corner = { CornerRadius = UDim.new(0.1, 1) },
+})
+
+local AudioAll = Window:MakeTab({"Audio all", "audio"})
+
+local Section = AudioAll:AddSection({"SOM PARA TODOS DO SERVER!!!!"})
+
+local Paragraph = AudioAll:AddParagraph({"Fe audio", "Audios de Ate 4 segundos\nBy dkzin"})
+
+local SomID = nil
+local idSelecionado = nil
+local loopCustomActive = false
+local loopListActive = false
+
+-- Função para tocar som
+local function tocarSom(id)
+    local Sound = Instance.new("Sound")
+    Sound.Name = "Som_"..tostring(id)
+    Sound.SoundId = "rbxassetid://"..id
+    Sound.Volume = 1
+    Sound.Looped = false
+    Sound.Parent = workspace
+    Sound:Play()
+
+    game:GetService("Debris"):AddItem(Sound, 5)
+
+    local args = {
+        [1] = workspace,
+        [2] = id,
+        [3] = 1
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Gu1nSound1s"):FireServer(unpack(args))
+end
+
+-- TextBox
+AudioAll:AddTextBox({
+  Name = "Colocar Som no Server",
+  Description = "Aplicar audio no server todo", 
+  PlaceholderText = "insira seu ID",
+  Callback = function(Value)
+    SomID = tonumber(Value)
+  end
+})
+
+-- Botão único para som personalizado
+AudioAll:AddButton({"colocar som", function()
+    if SomID then
+        tocarSom(SomID)
+    end
+end})
+
+-- Toggle 1 - Som personalizado em loop
+AudioAll:AddToggle({
+  Name = "COLOCAR SOM PERSONALIZADO",
+  Description = "repetir som em loop <font color='rgb(255, 0, 0)'>super alto</font> kkkkkkkkk",
+  Default = false 
+}):Callback(function(Value)
+    loopCustomActive = Value
+    if Value and SomID then
+        task.spawn(function()
+            while loopCustomActive do
+                tocarSom(SomID)
+                task.wait(0.01)
+            end
+        end)
+    end
+end)
+
+AudioAll:AddSection({"AUDIOS PRONTOS"})
+
+-- IDs corrigidos
+local listaID = {
+  ["xiado alto estoura ouvidos"] = "7339658122",
+  ["sai dai lava prato"] = "101232400175829",
+  ["LOUD CAIOX N COMPENSA"] = "78442476709262",
+  ["ESTOURADO APP DA SHOPE"] = "8747441609",
+  ["ESTOURADO GLITCH"] = "6314880174",
+  ["ESTOURADO GEMIDO DO ZAP"] = "106835463235574",
+  ["ESTOURADO RUIDO"] = "8426862196",
+  ["GATO RISONHO"] = "18260230947",
+  ["A"] = "80156405968805",
+  ["DEITA AQUI"] = "104283826167946",
+  ["SCARED"] = "4643776975",
+  ["I AM STEVE"] = "105101770611803",
+  ["POEIRA"] = "18186129508",
+  ["RE-ZERO"] = "101627462619966",
+  ["PLANKTON"] = "113252819553747",
+  ["THE MIMIC"] = "140563175793474",
+  ["MEME DO MAGO"] = "104345177666518",
+  ["WAKE WAKE"] = "79378165172842",
+  ["ONI-CHAN"] = "71319195626416",
+  ["A PIA TA CHEIA DE LOUSA"] = "98076927129047",
+  ["BRUH"] = "109726484373278",
+  ["KAWAI"] = "95310157598520",
+  ["MAN SCREAM"] = "76353414772777",
+  ["INVENCIBLE"] = "102022187056552",
+  ["AGHH"] = "12956254563",
+  ["DUDU"] = "101355609415237",
+  ["BENCA PAI"] = "132282810416937"
+}
+
+-- Dropdown com formatação limpa
+local Dropdown = AudioAll:AddDropdown({
+  Name = "Lista de IDs",
+  Description = "Use IDS da <font color='rgb(255, 0, 0)'>lista</font> caso você esteja sem",
+  Options = table.pack(
+    "xiado alto estoura ouvidos", "sai dai lava prato", "LOUD CAIOX N COMPENSA", "ESTOURADO APP DA SHOPE",
+    "ESTOURADO GLITCH", "ESTOURADO GEMIDO DO ZAP", "ESTOURADO RUIDO", "GATO RISONHO", "A", "DEITA AQUI",
+    "SCARED", "I AM STEVE", "POEIRA", "RE-ZERO", "PLANKTON", "THE MIMIC", "MEME DO MAGO", "WAKE WAKE",
+    "ONI-CHAN", "A PIA TA CHEIA DE LOUSA", "BRUH", "KAWAI", "MAN SCREAM", "INVENCIBLE", "AGHH", "DUDU",
+    "BENCA PAI"
+  ),
+  Default = "ESTOURADO GEMIDO DO ZAP",
+  Flag = "dropdown_teste",
+  Callback = function(Value)
+    idSelecionado = tonumber(listaID[Value])
+  end
+})
+
+-- Botão aplicar som da lista
+AudioAll:AddButton({"APLICAR ID DA LISTA", function()
+    if idSelecionado then
+        tocarSom(idSelecionado)
+    end
+end})
+
+-- Toggle 2 - Lista em loop
+AudioAll:AddToggle({
+  Name = "APLICA SOM DA LISTA",
+  Description = "aplicar em loop o <font color='rgb(255, 0, 0)'>audio all</font> para todos",
+  Default = false 
+}):Callback(function(Value)
+    loopListActive = Value
+    if Value and idSelecionado then
+        task.spawn(function()
+            while loopListActive do
+                tocarSom(idSelecionado)
+                task.wait(0.01)
+            end
+        end)
+    end
+end)
